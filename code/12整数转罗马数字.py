@@ -41,28 +41,59 @@ C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
 输出: "MCMXCIV"
 解释: M = 1000, CM = 900, XC = 90, IV = 4."""
 
-# 方法一，创建数字与罗马文字的对应集合
+# 方法一，创建数字与罗马文字的对应集合,用current表示num减去n个千位，m个900，x个500.。。的结果，
+# 迭代条件： 只要current-1000大于等于0，就继续减下去
 
 
-class Solution(object):
+# class Solution(object):
+#     def intToRoman(self, num):
+#         """
+#         :type num: int
+#         :rtype: str
+#         """
+#         roman_dim = [[1, 'I'], [4, 'IV'], [5, 'V'], [9, 'IX'],
+#                      [10, 'X'], [40, 'XL'], [50, 'L'], [90, 'XC'],
+#                      [100, 'C'], [400, 'CD'], [500, 'D'], [900, 'CM'], [1000, 'M']]
+#         current = num
+#         dim = 12
+#         roman_str = ''
+#         while current > 0:
+#             while current//roman_dim[dim][0] == 0:  # '//'符号表示除法向下取整，比如 5//2 = 2
+#                 dim -= 1
+#             while current-roman_dim[dim][0] >= 0:
+#                 current -= roman_dim[dim][0]
+#                 roman_str += roman_dim[dim][1]
+#         return roman_str
+
+# 方法二，创建数字与罗马文字的对应集合,用一个循环，k表示num含有多少个1000，100，900，500.。。。
+
+
+class Solution:
+
     def intToRoman(self, num):
         """
         :type num: int
         :rtype: str
         """
-        roman_dim = [[1, 'I'], [4, 'IV'], [5, 'V'], [9, 'IX'],
-                     [10, 'X'], [40, 'XL'], [50, 'L'], [90, 'XC'],
-                     [100, 'C'], [400, 'CD'], [500, 'D'], [900, 'CM'], [1000, 'M']]
-        current = num
-        dim = 12
+        values = [1000, 900, 500, 400,
+                  100, 90, 50, 40,
+                  10, 9, 5, 4, 1]
+        symbols = ["M", "CM", "D", "CD",
+                   "C", "XC", "L", "XL",
+                   "X", "IX", "V", "IV",
+                   "I"]
         roman_str = ''
-        while current > 0:
-            while current//roman_dim[dim][0] == 0:  # '//'符号表示除法向下取整，比如 5//2 = 2
-                dim -= 1
-            while current-roman_dim[dim][0] >= 0:
-                current -= roman_dim[dim][0]
-                roman_str += roman_dim[dim][1]
+        i = 0
+        while(i<len(values)):
+            k = int(num/values[i]) #k 表示有个千，百，十。。。
+            for n in range(k):
+                roman_str += symbols[i]
+            num = num-k*values[i]
+            i+=1
         return roman_str
+
+
+
 if __name__ == "__main__":
     S = Solution()
     print(S.intToRoman(1994))
