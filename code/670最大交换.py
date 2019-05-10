@@ -39,8 +39,8 @@ class Solution(object):
         :type num: int
         :rtype: int
         """
-        A = map(int,str(num)) # map(function,iterable) A是整型list
-        last = {x:i for i,x in enumerate(A)} # {key-nums的不同值(1-9):values-1到9出现的最后一次的位置}
+        A = list(map(int,str(num))) # map(function,iterable) A是整型list
+        last = {x:i for i,x in enumerate(A)} # {key---nums的不同值(1-9):values---1到9出现的最后一次的位置}
         for i,x in enumerate(A):
             for d in range(9,x,-1):
                if last.get(d)>i: # 如果从9到当前值遍历过程中出现了last里的key，而且该key的value索引大于i那么
