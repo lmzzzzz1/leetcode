@@ -10,6 +10,7 @@
   [-1, -1, 2]
 ]
 '''
+# 解法一：利用双指针降低复杂度，基本思路就是去比较 i+l+r和0的大小
 class Solution:
     def threeSum(self, nums) -> [int]:
         ans = []
@@ -36,7 +37,30 @@ class Solution:
                     r-=1
                     continue
         return ans
+
+# 解法二：利用python的set避免重复
+    def threeSum2(self, nums) -> [int]:
+            if len(nums)<3:
+                return []
+            res = set()
+            
+            nums.sort() # 从小到大排个序
+            
+            for n,v in enumerate(nums[:-2]):
+                if n>0 and v==nums[n-1]:
+                    continue
+                if v >0:
+                    break
+                dic = {}
+                for m in nums[n+1:]:
+                    if m not in dic:
+                        dic[-m-v]=1
+                    else:
+                        res.add((v,m,-m-v)) # 添加元祖进去
+
+            return list(map(list,res))
+
 if __name__ == "__main__":
     s=Solution()
     test = [0,0,0,0]
-    print(s.threeSum(test))
+    print(s.threeSum2(test))
