@@ -20,29 +20,35 @@
 """
 
 # 解法一，参考三数之和的解法，时间复杂度为O(n^3)
+# 在观看完网上的代码后，优化一些，主要是加了一些break条件
 
 class Solution:
     def fourSum(self, nums: [int], target: int) -> [[int]]:
-        # if len(nums) < 4:
-        #     return []
+        if len(nums) < 4:
+            return []
         ans = []
         nums.sort()  # 先排个序
         for n, v in enumerate(nums[:-3]):
             if n > 0 and v == nums[n-1]:
                 continue
-            # if v > target:
-            #     break
+            # 当数组最小值和都大于target 跳出   
+            if v+nums[n+1]+nums[n+2]+nums[n+3] > target:
+                break
+            # 当数组最大值和都小于target,说明i这个数还是太小,遍历下一个
+            if v+nums[len(nums)-1]+nums[len(nums)-2]+nums[len(nums)-3] < target:
+                continue
+
             for i in range(n+1, len(nums)-2):
                 if i>n+1 and nums[i] == nums[i-1]:
                     continue
+                # 当数组最小值和都大于target 跳出   
+                if v+nums[i]+nums[i+1]+nums[i+2] > target:
+                    break
+                # 当数组最大值和都小于target,说明i这个数还是太小,遍历下一个
+                if v+nums[len(nums)-1]+nums[len(nums)-2]+nums[i] < target:
+                    continue    
                 l, r = i+1, len(nums)-1
                 while (l < r):
-                    if v+nums[i]+nums[l]+nums[r]<target:
-                        l+=1
-                        continue
-                    if v+nums[i]+nums[l]+nums[r]>target:
-                        r-=1
-                        continue
                     if v+nums[i]+nums[l]+nums[r]==target:
                         ans.append([v,nums[i],nums[l],nums[r]])
                         while l<r and nums[l]==nums[l+1] :
@@ -51,7 +57,11 @@ class Solution:
                             r-=1
                         l+=1
                         r-=1
-                        continue
+                    elif v+nums[i]+nums[l]+nums[r]<target:
+                        l+=1
+                    else :
+                        r-=1
+                    
         return ans
 
 if __name__ == "__main__":
