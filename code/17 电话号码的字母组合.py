@@ -8,7 +8,7 @@ Example:
 Input: "23"
 Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
 '''
-# 解法一：一看就不能用循环，因为你不知道有几个循环，所以用迭代
+# 解法一：一看就不能用循环，因为你不知道有几个循环，所以用递归
 
 
 class Solution:
@@ -28,8 +28,7 @@ class Solution:
                '7': ['p', 'q', 'r', 's'],
                '8': ['t', 'u', 'v'],
                '9': ['w', 'x', 'y', 'z']}
-        str_list = list(digits)
-
+        
         def backtrack(combination, next_digits):
             '''
             :type combination:str
@@ -45,3 +44,30 @@ class Solution:
                     backtrack(combination+letter, next_digits[1:])
         backtrack('', digits)
         return ans
+
+# 解法二： 迭代法
+    def letterCombinations2(self, digits: str) -> [str]:
+        dic = {
+            "2":"abc",
+            "3":"def",
+            "4":"ghi",
+            "5":"jkl",
+            "6":"mno",
+            "7":"pqrs",
+            "8":"tuv",
+            "9":"wxyz"
+        }
+        if not digits:
+            return []
+        res = ['']
+        for number in digits:
+            next_res = []
+            for word in dic[number]:
+                for tmp in res:
+                    next_res.append(tmp+word)
+            res = next_res
+        return res        
+if __name__ == "__main__":
+    s = Solution()
+    test = "23"
+    print(s.letterCombinations2(test))
