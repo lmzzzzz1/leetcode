@@ -13,15 +13,30 @@ class Solution(object):
         :rtype: ListNode
         """
         dummy = ListNode(0) #设定一个哑节点
-        
-        node_list = []
-        node = head
-        while not node.next:
-            node_list.append(node)
+        dummy.next = head 
+        length = 0
+        node = dummy
+        while  node.next:
+            length+=1
             node = node.next
-        if len(node_list)>1:
-            node_list[-n].next = node    
-        return head
+        length-=n
+        node = dummy
+        while length > 0:
+           length-=1
+           node = node.next
+        node.next = node.next.next
+            
+        return dummy.next
 
 if __name__ == "__main__":
-    pass
+    first = ListNode(1)
+    second = ListNode(2)
+    third = ListNode(3)
+    forth = ListNode(4)
+    fifth = ListNode(5)
+    first.next =second
+    second.next = third
+    third.next = forth
+    forth.next = fifth
+    s= Solution()
+    print(s.removeNthFromEnd(first,2).val)
