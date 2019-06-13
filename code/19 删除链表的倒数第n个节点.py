@@ -28,6 +28,30 @@ class Solution(object):
             
         return dummy.next
 
+# 解法二：遍历一次，使用双指针，一个在链表的头，另一个在链表的第n+1位，这样当后面的指针到达末尾时，前面的指针正好达到 l-n 位
+
+    def removeNthFromEnd2(self,head,n):
+        """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode11
+        """
+        dummy = ListNode(0)
+        dummy.next = head
+        first = dummy
+        second = dummy
+        for i in range(n):
+            second = second.next
+        while second.next:
+            first = first.next
+            second = second.next
+        first.next = first.next.next
+        return dummy.next    
+
+            
+
+
+
 if __name__ == "__main__":
     first = ListNode(1)
     second = ListNode(2)
@@ -39,4 +63,4 @@ if __name__ == "__main__":
     third.next = forth
     forth.next = fifth
     s= Solution()
-    print(s.removeNthFromEnd(first,2).val)
+    print(s.removeNthFromEnd2(first,2).val)
