@@ -28,33 +28,55 @@
 输出: true
 
 """
+#  解法一：利用栈的思想，先进后出
+
+
 class Solution(object):
     def isValid(self, s):
         """
         :type s: str
         :rtype: bool
         """
-        word_dict = {"(":")","{":"}","[":"]"}
-        if not s: 
+        n = len(s)
+        if not s:
             return True
-        elif len(s)%2 ==1:
+        elif n % 2 == 1:
             return False
-        else:
-            left = int(len(s)/2-1)
-            right = int(len(s)/2) # 找中间那两个
-            while(left>=0):
-                if word_dict[s[left]] != s[right]:
+        else:  # 如果是偶数
+            word_dict = {")": "(", "}": "{", "]": "["}
+            stack_list = ['#']
+            for i in s:
+                if i not in word_dict:
+                    stack_list.append(i)
+                else:
+                    if word_dict[i] != stack_list[-1]:
+                        return False
+                    else:
+                        stack_list.pop()
+            if stack_list == ["#"]:
+                return True
+            else:
+                return False
+
+# 第二版，看过官方解法，写的太不简洁，重新写
+    def isValid_by_official(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        word_dict = {")": "(", "}": "{", "]": "["}
+        stack_list = []
+
+        for char in s:
+            if char in word_dict:
+                top_element = stack_list.pop() if stack_list else "$"
+                if top_element != word_dict[char]:
                     return False
-                left-=1
-                right+=1
-            return True
-
-
-
-
+            else: stack_list.append(char)
+        return not stack_list
 
 
 if __name__ == "__main__":
-    test_string = "{[()]}"
+    test_string = "()[]{}"
     s = Solution()
-    print(s.isValid(test_string))
+    print(s.isValid_by_official(test_string))
