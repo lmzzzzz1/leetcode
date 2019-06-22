@@ -74,9 +74,14 @@ class Solution(object):
                     return False
             else: stack_list.append(char)
         return not stack_list
-
+# 最短版本：超级短，虽然复杂度高一些
+    def isValid_shortest(self,s):
+        while "()" in s or "{}" in s or '[]' in s:
+            s = s.replace("()", "").replace('{}', "").replace('[]', "")
+        return s == ''
 
 if __name__ == "__main__":
     test_string = "()[]{}"
     s = Solution()
     print(s.isValid_by_official(test_string))
+
