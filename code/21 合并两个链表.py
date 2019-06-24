@@ -41,7 +41,7 @@ class Solution(object):
 
 
         return search(l1,l2)
-
+        
     def mergeTwoLists_from_leetcode(self, l1: ListNode, l2: ListNode) -> ListNode:
         if l1 and l2: # 如果l1和l2都不为空
             if l1.val > l2.val: l1, l2 = l2, l1
