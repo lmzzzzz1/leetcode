@@ -43,6 +43,29 @@ class Solution:
             ans.append(current.val)
             root = current.right 
         return ans
+
+#  方法三： morris 遍历，使用数据结构————线索二叉树 Threaded Binary Tree
+#  核心思想：把左子树的最右节点的右节点连接当前点
+    def inorderTraversal_by_morris(self,cur):
+
+            ans = []
+            while cur:
+                if cur.left is None:
+                    ans.append(cur.val)
+                    cur = cur.right
+                else:
+                    last = cur.left
+                    while(last.right and cur!=last.right):
+                        last = last.right
+                    if not last.right:
+                        last.right = cur
+                        cur = cur.left
+                    else:
+                        # 说明这是第二次来到了这个点
+                        ans.append(cur.val)
+                        cur = cur.right
+            return ans
+
 if __name__ == "__main__":
     s = Solution()
     a1 = TreeNode(1)
@@ -50,4 +73,4 @@ if __name__ == "__main__":
     a3 = TreeNode(3)
     a1.right = a2
     a2.left = a3
-    print(s.inorderTraversal_by_iteration(a1))
+    print(s.inorderTraversal_by_morris(a1))
