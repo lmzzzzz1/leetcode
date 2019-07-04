@@ -48,7 +48,7 @@ class Solution(object):
 # 因此在 Python 中可以使用 deque 的 append() 和 popleft() 函数来快速实现队列的功能。
     def levelOrder_by_queue(self, root):
         """
-        :type root: TreeNode
+        :type root: TreeNode 
         :rtype: List[List[int]]
         """
         if  not root:
