@@ -20,8 +20,11 @@ It doesn't matter what values are set beyond the returned length.
 '''
 # 解法一：快慢双指针,空间复杂度为 O(1)
 class Solution:
-    def removeDuplicates(self, nums: List[int]) -> int:
-        
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
 #       双指针
         if not nums:
             return 0
