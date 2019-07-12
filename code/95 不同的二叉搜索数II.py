@@ -29,7 +29,7 @@ class TreeNode:
         self.right = None
 
 class Solution:
-    def generateTrees(self, n: int) -> List[TreeNode]:
+    def generateTrees(self, n: int):
         if n==0:
             return []
         def helper(low,high): # 返回根节点列表
