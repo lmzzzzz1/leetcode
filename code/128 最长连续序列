@@ -28,9 +28,10 @@ class Solution(object):
                 return 0
 
         ans = 0
-        for i in nums[1:]:
+        for i in nums:
             ans = max(ans, find_left_and_right(i))
         return ans
+
 
 if __name__ == '__main__':
     s = Solution()
