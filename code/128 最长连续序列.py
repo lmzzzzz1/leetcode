@@ -32,8 +32,28 @@ class Solution(object):
             ans = max(ans, find_left_and_right(i))
         return ans
 
+    def longestConsecutive_by_official(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        longest = 0
+        num_set = set(nums)
+
+        for i in num_set:
+            if i - 1 not in num_set:
+
+                cur = i
+                cur_longest = 1
+
+                while cur + 1 in num_set:
+                    cur_longest += 1
+                    cur += 1
+                longest = max(longest, cur_longest)
+        return longest
+
 
 if __name__ == '__main__':
     s = Solution()
     test_list = [100, 4, 200, 1, 3, 2]
-    print(s.longestConsecutive(test_list))
+    print(s.longestConsecutive_by_official(test_list))
