@@ -11,7 +11,7 @@
 
 """
 
-
+# 解法一： 使用集合set
 class Solution(object):
     def longestConsecutive(self, nums):
         """
@@ -52,8 +52,26 @@ class Solution(object):
                 longest = max(longest, cur_longest)
         return longest
 
+# 解法二：使用hashmap
+    def longestConsecutive_by_hashmap(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        nums_dict = dict()
+        longest = 0
+        for n in nums:
+            if n not in nums_dict:
+                left = nums_dict.get(n-1,0)
+                right = nums_dict.get(n+1,0)
+                current = left+right+1
+                longest = max(longest,current)
+                nums_dict[n] = current
+                nums_dict[n-left] = current
+                nums_dict[n+right] = current
+        return longest
 
 if __name__ == '__main__':
     s = Solution()
     test_list = [100, 4, 200, 1, 3, 2]
-    print(s.longestConsecutive_by_official(test_list))
+    print(s.longestConsecutive_by_hashmap(test_list))
