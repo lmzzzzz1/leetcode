@@ -7,33 +7,31 @@
 // @lc code=start
 class Solution {
     public int maxProfit(int k, int[] prices) {
-        if (prices.length == 0)
+        int n = prices.length;
+        if (n == 0)
             return 0;
-        if (k>prices.length/2) return maxProfit(prices);
-        int[][][] mp = new int [prices.length][k+1][2];
-        //base 
-        
-        for(int n = 0; n<prices.length;n++) {
-            
-            for(int kk = k; kk>=1;kk--){
-                if(n==0){
-                    mp[0][kk][1] = -prices[n];
-                    mp[0][kk][0] = 0;
-                    mp[0][0][1] = Integer.MIN_VALUE;
-                    mp[0][0][0] = 0;
-                    continue;
-                }
-                mp[n][kk][0] = Math.max(mp[n-1][kk][0], mp[n-1][kk][1]+prices[n]);
-                mp[n][kk][1] = Math.max(mp[n-1][kk][1], mp[n-1][kk-1][0]-prices[n]);
+        if (k > n / 2)
+            return maxProfit(prices);
+        int[][] dp = new int[k+1][2];
+        for (int i = 0; i <= k; i++) {
+            dp[i][1] = -prices[0];
+        }
+        for (int i = 1; i < n; i++) {
+            for (int kk = k; kk >= 1; kk--) {
+                int tmp = dp[kk][1] ;
+                dp[kk][1] = Math.max(dp[kk-1][0]-prices[i], dp[kk][1]);
+                dp[kk][0] = Math.max(tmp+prices[i], dp[kk][0]);
+                
             }
         }
-        
-        return mp[prices.length-1][k][0];
+        return dp[k][0];
     }
-    public int maxProfit(int[] prices){
+
+    public int maxProfit(int[] prices) {
         int max = 0;
-        for(int i = 1; i<prices.length;i++) {
-            if(prices[i]>prices[i-1]) max+=prices[i]-prices[i-1];
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] > prices[i - 1])
+                max += prices[i] - prices[i - 1];
         }
         return max;
     }

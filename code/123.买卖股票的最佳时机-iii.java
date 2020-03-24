@@ -11,26 +11,19 @@ class Solution {
         if (n == 0) {
             return 0;
         }
-        int K = 2;
-        int[][] mp_hold = new int[n][K+1];
-        int[][] mp_clear = new int[n][K+1];
-        
-
-        for (int i = 0; i < n; i++) {
-            for (int k = 1; k <= K; k++) {
-                if(i == 0) {
-                    mp_hold[0][0] = Integer.MIN_VALUE;
-                    mp_hold[0][k] = -prices[0];
-                    mp_clear[0][0] = 0;
-                    mp_clear[0][k] = 0;
-                    continue;
-                }
-                mp_hold[i][k] = Math.max(mp_hold[i-1][k], mp_clear[i-1][k-1]-prices[i]);
-                mp_clear[i][k] = Math.max(mp_clear[i-1][k], mp_hold[i-1][k]+prices[i]);
-            }
+        int[] mp_hold_2 = new int[n];
+        int[] mp_clear_2 = new int[n];
+        int[] mp_hold_1 = new int[n];
+        int[] mp_clear_1 = new int[n];
+        mp_clear_1[0] = 0; mp_hold_1[0] = -prices[0];
+        mp_clear_2[0] = 0; mp_hold_2[0] = Integer.MIN_VALUE;
+        for (int i = 1; i < n; i++) {
+            mp_clear_1[i] = Math.max(mp_clear_1[i-1], mp_hold_1[i-1]+prices[i]);
+            mp_clear_2[i] = Math.max(mp_clear_2[i-1], mp_hold_2[i-1]+prices[i]);
+            mp_hold_1[i] = Math.max(mp_hold_1[i-1], -prices[i]);
+            mp_hold_2[i] = Math.max(mp_hold_2[i-1], mp_clear_1[i-1]-prices[i]);
         }
-        return mp_clear[n-1][K];
-
+        return Math.max(mp_clear_2[n-1], mp_clear_1[n-1]);
     }
 }
 // @lc code=end
