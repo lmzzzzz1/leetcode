@@ -9,6 +9,9 @@ import java.util.LinkedList;
 
 // @lc code=start
 class LRUCache {
+    // 1. 链表+hashmap实现
+
+    
     class Node {
         int key;
         int value;
@@ -54,6 +57,8 @@ class LRUCache {
 
         }
     }
+
+
 }
 
 /**

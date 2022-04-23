@@ -7,14 +7,15 @@
 // @lc code=start
 class Solution {
     public boolean isPalindrome(int x) {
-        if (x<0|| x!=0 && x%10==0) return false;
-        int res =0;
-        while (x>res) {
-            res = res*10 + x%10;
+        if (x < 0||(x!=0 && x%10==0))
+            return false;
+        int reverse = 0;
+        while (x > reverse) {
+            // int i = ;
+            reverse = reverse * 10 + x % 10;
             x /= 10;
         }
-        return x==res || res/10 == x;
+        return x == reverse || reverse/10==x;
     }
 }
 // @lc code=end
-
